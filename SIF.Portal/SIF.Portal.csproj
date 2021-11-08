@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -205,12 +206,12 @@
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="M_Modify_Lead.aspx.cs~RF105cc33.TMP" />
-    <None Include="Properties\PublishProfiles\TTG.Portal.pubxml" />
     <Content Include="script\BitString.as" />
     <Content Include="script\JPGEncoder.as" />
     <Content Include="script\jscam.as" />
     <Content Include="script\Makefile" />
     <Content Include="script\webcam.jquery.json" />
+    <None Include="Properties\PublishProfiles\SIF.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1370,7 +1371,6 @@
     <Content Include="Previligers.aspx" />
     <Content Include="ProfitInvoiceReports.aspx" />
     <Content Include="ProfTaxDeductionReports.aspx" />
-    <Content Include="Properties\PublishProfiles\TTG.Portal.pubxml.user" />
     <Content Include="ReceiptDetails.aspx" />
     <Content Include="Receipts.aspx" />
     <Content Include="ReceiveReports.aspx" />

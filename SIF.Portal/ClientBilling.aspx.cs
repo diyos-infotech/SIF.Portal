@@ -9062,6 +9062,28 @@ namespace SIF.Portal
 
                         }
                     }
+
+                    cell = new PdfPCell(new Phrase("MSME NO", FontFactory.GetFont(FontStyle, fontsizee - 1, Font.BOLD, BaseColor.BLACK)));
+                    cell.HorizontalAlignment = 0;
+                    cell.BorderWidthBottom = 0;
+                    cell.BorderWidthTop = 0;
+                    cell.BorderWidthRight = 0f;
+                    cell.BorderWidthLeft = .2f;
+                    cell.Colspan = 1;
+                    cell.BorderColor = BaseColor.BLACK;
+                    Childterms.AddCell(cell);
+
+
+                    cell = new PdfPCell(new Phrase(": " + "UDYAM-TS-20-0013269", FontFactory.GetFont(FontStyle, fontsizee - 1, Font.NORMAL, BaseColor.BLACK)));
+                    cell.HorizontalAlignment = 0;
+                    cell.BorderWidthBottom = 0;
+                    cell.BorderWidthTop = 0;
+                    cell.BorderWidthRight = 0;
+                    cell.BorderWidthLeft = 0;
+                    cell.Colspan = 2;
+                    cell.BorderColor = BaseColor.BLACK;
+                    Childterms.AddCell(cell);
+
                     if (Servicetax.Length > 0)
                     {
 
