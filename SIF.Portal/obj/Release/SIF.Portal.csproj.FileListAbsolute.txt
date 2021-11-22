@@ -81,3 +81,6 @@ F:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.csproj.CoreCompileIn
 F:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.csproj.CopyComplete
 F:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.dll
 F:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.pdb
+D:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.csproj.AssemblyReference.cache
+D:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.csproj.CoreCompileInputs.cache
+D:\GitProjects\SIF.Portal\SIF.Portal\obj\Release\SIF.Portal.csproj.CopyComplete

@@ -994,7 +994,7 @@ namespace SIF.Portal
                     IDCardTemptable1.TotalWidth = 300f;
                     IDCardTemptable1.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
                     IDCardTemptable1.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
-                    float[] width1 = new float[] { 2f, 2f, 2f, 2f, 2f };
+                    float[] width1 = new float[] { 2f, 1f, 0.8f, 0.8f, 0.1f };
                     IDCardTemptable1.SetWidths(width1);
 
                     if (File.Exists(imagepath5))
@@ -1008,7 +1008,7 @@ namespace SIF.Portal
                         companylogo.HorizontalAlignment = 0;
                         companylogo.Colspan = 1;
                         companylogo.Border = 0;
-                        companylogo.Rotation = 90;
+                        // companylogo.Rotation = 90;
                         IDCardTemptable1.AddCell(companylogo);
 
                     }
@@ -1019,7 +1019,7 @@ namespace SIF.Portal
                         companylogo.Colspan = 1;
                         companylogo.Border = 0;
                         companylogo.FixedHeight = 45;
-                        companylogo.Rotation = 90;
+                        // companylogo.Rotation = 90;
                         IDCardTemptable1.AddCell(companylogo);
                     }
 
@@ -1028,12 +1028,12 @@ namespace SIF.Portal
                     Font FontStyle2 = FontFactory.GetFont("Perpetua Titling MT", BaseFont.CP1252, BaseFont.EMBEDDED, Fontsize - 3, Font.BOLD, BaseColor.BLACK);
 
 
-                    PdfPCell cellCompName = new PdfPCell(new Phrase(CompanyName, FontFactory.GetFont(fontstyle1, Fontsize, Font.BOLD, BaseColor.RED)));
+                    PdfPCell cellCompName = new PdfPCell(new Phrase(CompanyName, FontFactory.GetFont(fontstyle1, Fontsize-1, Font.BOLD, BaseColor.RED)));
                     cellCompName.HorizontalAlignment = 0;
                     cellCompName.Border = 0;
                     cellCompName.Colspan = 4;
-                    cellCompName.PaddingLeft = 10f;
-                    cellCompName.Rotation = 90;
+                    cellCompName.PaddingLeft = -50f;
+                    // cellCompName.Rotation = 90;
                     IDCardTemptable1.AddCell(cellCompName);
 
                     PdfPCell cellCompAddress = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle1, Fontsize, Font.BOLD, BaseColor.BLACK)));
@@ -1041,16 +1041,16 @@ namespace SIF.Portal
                     cellCompAddress.Border = 0;
                     cellCompAddress.Colspan = 1;
                     cellCompAddress.PaddingTop = -70f;
-                    cellCompAddress.Rotation = 90;
+                    //cellCompAddress.Rotation = 90;
                     IDCardTemptable1.AddCell(cellCompAddress);
 
-                    cellCompAddress = new PdfPCell(new Phrase(Address + "" + Emailid, FontFactory.GetFont(fontstyle1, Fontsize - 3, Font.NORMAL, BaseColor.BLACK)));
+                    cellCompAddress = new PdfPCell(new Phrase(Address + "" + Emailid, FontFactory.GetFont(fontstyle1, Fontsize - 4, Font.NORMAL, BaseColor.BLACK)));
                     cellCompAddress.HorizontalAlignment = 0;
                     cellCompAddress.Border = 0;
                     cellCompAddress.Colspan = 4;
-                    cellCompAddress.PaddingLeft = 10f;
+                    cellCompAddress.PaddingLeft = -50f;
                     cellCompAddress.PaddingTop = -32f;
-                    cellCompAddress.Rotation = 90;
+                    // cellCompAddress.Rotation = 90;
                     //    cellCompAddress.PaddingLeft = 2f;
                     IDCardTemptable1.AddCell(cellCompAddress);
 
@@ -1072,7 +1072,7 @@ namespace SIF.Portal
                     if (Image.Length > 0)
                     {
                         iTextSharp.text.Image Empphoto = iTextSharp.text.Image.GetInstance(imagepath1 + Image);
-                        //Empphoto.ScalePercent(25f);
+                        //Empphoto.ScalePercent(3f);
                         Empphoto.ScaleAbsolute(50f, 60f);//50f, 60f
                         PdfPCell EmpImage = new PdfPCell();
                         Paragraph Emplogo = new Paragraph();
@@ -1081,9 +1081,9 @@ namespace SIF.Portal
                         EmpImage.HorizontalAlignment = 0;
                         EmpImage.Colspan = 1;
                         EmpImage.Border = 0;
-                        EmpImage.Rotation = 90;
+                        //EmpImage.Rotation = 90;
                         //EmpImage.PaddingTop = -10f;
-                        //   EmpImage.PaddingLeft = -20;
+                        //EmpImage.PaddingLeft = -20;
                         childtable1.AddCell(EmpImage);
                     }
                     else
@@ -1098,7 +1098,7 @@ namespace SIF.Portal
                         EmpImage.HorizontalAlignment = 0;
                         EmpImage.Colspan = 1;
                         EmpImage.Border = 0;
-                        EmpImage.Rotation = 90;
+                        // EmpImage.Rotation = 90;
                         // EmpImage.PaddingTop = -10f;
                         //   EmpImage.PaddingLeft = -20;
                         //  EmpImage.PaddingTop = 2;
@@ -1121,7 +1121,7 @@ namespace SIF.Portal
                     childtable2.TotalWidth = 200f;
                     childtable2.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
                     childtable2.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
-                    float[] widthch2 = new float[] { 2.2f, 1f, 2f, 2f };
+                    float[] widthch2 = new float[] { 1.8f, 1f, 1f, 1f };
                     childtable2.SetWidths(widthch2);
 
 
@@ -1129,7 +1129,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 1;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1138,7 +1138,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 3;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1147,7 +1147,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 1;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1156,7 +1156,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 3;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1166,7 +1166,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 1;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1175,7 +1175,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 3;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1184,7 +1184,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 1;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1193,7 +1193,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 3;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1202,7 +1202,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 1;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1211,7 +1211,7 @@ namespace SIF.Portal
                     EmpData.HorizontalAlignment = 0;
                     EmpData.Colspan = 3;
                     EmpData.Border = 0;
-                    // EmpData.PaddingTop = -5f;
+                    EmpData.PaddingLeft = -50f;
                     // EmpData.SetLeading(0f, 1.4f);
                     childtable2.AddCell(EmpData);
 
@@ -1236,7 +1236,7 @@ namespace SIF.Portal
                     cellAuthority.HorizontalAlignment = 0;
                     cellAuthority.Border = 0;
                     cellAuthority.Colspan = 5;
-                    //cellAuthority.MinimumHeight = 10f;
+                    cellAuthority.MinimumHeight = 28f;
                     // cellAuthority.PaddingLeft = 25;
                     IDCardTemptable1.AddCell(cellAuthority);
 
@@ -1307,7 +1307,7 @@ namespace SIF.Portal
                     IDCardTemptable2.HorizontalAlignment = Element.ALIGN_LEFT;
                     IDCardTemptable2.TotalWidth = 300f;
                     //IDCardTemptable2.LockedWidth = true;
-                    float[] width2 = new float[] { 3.2f, 0.2f, 0.8f, 2f, 2f };
+                    float[] width2 = new float[] { 2f, 1f, 0.8f, 0.8f, 0.1f };
                     IDCardTemptable2.SetWidths(width2);
 
                     if (k % 2 == 0)
@@ -1371,7 +1371,7 @@ namespace SIF.Portal
                     EmpDataPart2.HorizontalAlignment = 0;
                     EmpDataPart2.Border = 0;
                     EmpDataPart2.Colspan = 3;
-                    //  EmpDataPart2.PaddingLeft = -20;
+                    EmpDataPart2.PaddingLeft = -40;
                     EmpDataPart2.PaddingTop = 20;
                     IDCardTemptable2.AddCell(EmpDataPart2);
 
@@ -1397,7 +1397,7 @@ namespace SIF.Portal
                     EmpDataPart2.HorizontalAlignment = 0;
                     EmpDataPart2.Border = 0;
                     EmpDataPart2.Colspan = 3;
-                    //  EmpDataPart2.PaddingLeft = -20;
+                    EmpDataPart2.PaddingLeft = -40;
                     EmpDataPart2.PaddingTop = 5;
                     EmpDataPart2.PaddingBottom = 7;
                     IDCardTemptable2.AddCell(EmpDataPart2);
@@ -1422,7 +1422,7 @@ namespace SIF.Portal
                     EmpDataPart2.HorizontalAlignment = 0;
                     EmpDataPart2.Border = 0;
                     EmpDataPart2.Colspan = 3;
-                    //  EmpDataPart2.PaddingLeft = -20;
+                    EmpDataPart2.PaddingLeft = -40;
                     // EmpDataPart2.PaddingTop = 20;
                     IDCardTemptable2.AddCell(EmpDataPart2);
 
@@ -1432,10 +1432,11 @@ namespace SIF.Portal
                     EmpDataPart2.Border = 0;
                     IDCardTemptable2.AddCell(EmpDataPart2);
 
-                    EmpDataPart2 = new PdfPCell(new Phrase("Employee Signature : " + EmpSign, FontFactory.GetFont(fontstyle, Fontsize - 1, Font.BOLD, color)));
+                    EmpDataPart2 = new PdfPCell(new Phrase("Employee Signature : ", FontFactory.GetFont(fontstyle, Fontsize - 1, Font.BOLD, color)));
                     EmpDataPart2.HorizontalAlignment = 0;
                     EmpDataPart2.Border = 0;
                     EmpDataPart2.Colspan = 3;
+                    EmpDataPart2.PaddingLeft = -20;
                     IDCardTemptable2.AddCell(EmpDataPart2);
 
                     EmpDataPart2 = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize - 1, Font.BOLD, BaseColor.RED)));
@@ -1463,9 +1464,17 @@ namespace SIF.Portal
                     Instructions1.HorizontalAlignment = Element.ALIGN_JUSTIFIED;
                     Instructions1.Border = 0;
                     Instructions1.Colspan = 5;
-                    //     Instructions1.PaddingLeft = -10f;
+                    //Instructions1.MinimumHeight = 25f;
                     Instructions1.SetLeading(0f, 1.2f);
                     IDCardTemptable2.AddCell(Instructions1);
+
+                    PdfPCell Instructions1a = new PdfPCell(new Phrase(" ", FontFactory.GetFont(fontstyle, Fontsize - 1, Font.NORMAL, color)));
+                    Instructions1a.HorizontalAlignment = Element.ALIGN_JUSTIFIED;
+                    Instructions1a.Border = 0;
+                    Instructions1a.Colspan = 5;
+                    Instructions1a.MinimumHeight = 35f;
+                    //Instructions1a.SetLeading(0f, 1.2f);
+                    IDCardTemptable2.AddCell(Instructions1a);
 
                     #endregion for sub table
 
