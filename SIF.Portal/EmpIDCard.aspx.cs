@@ -83,6 +83,55 @@ namespace SIF.Portal
 
         }
 
+
+        public class PageEventHelperL : PdfPageEventHelper
+        {
+            PdfContentByte cb;
+            PdfTemplate template;
+
+            BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+
+            public override void OnOpenDocument(PdfWriter writer, Document document)
+            {
+                cb = writer.DirectContent;
+                template = cb.CreateTemplate(10, 10);
+            }
+            public override void OnEndPage(PdfWriter writer, Document document)
+            {
+                base.OnEndPage(writer, document);
+
+
+                //iTextSharp.text.Image imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath("~/assets/BillLogo3s.png"));
+                iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(System.Web.HttpContext.Current.Server.MapPath("~/assets/Front Broder.jpg"));
+
+                //imgfoot.SetAbsolutePosition(0, 0);
+                //imghead.Alignment = (iTextSharp.text.Image.ALIGN_LEFT | iTextSharp.text.Image.UNDERLYING);
+                //imghead.ScalePercent(50f);//55
+                //imghead.SetAbsolutePosition(0, -5);
+
+                //PdfContentByte cbhead = writer.DirectContent;
+                //PdfTemplate tpl = cbhead.CreateTemplate(580, 160);
+                //tpl.AddImage(imghead);
+
+
+                imgfoot.ScalePercent(100f);//55
+                imgfoot.SetAbsolutePosition(0, 0);
+
+                PdfContentByte cbfoot = writer.DirectContent;
+                PdfTemplate tp = cbfoot.CreateTemplate(580, 120);
+                tp.AddImage(imgfoot);
+
+
+                cbfoot.AddTemplate(tp, 8, 10);
+                //19,27
+                //  cbhead.AddTemplate(tpl, 8, 762);
+
+                Phrase headPhraseImg = new Phrase(cbfoot + "", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 7, iTextSharp.text.Font.NORMAL));
+                // Phrase footPhraseImg = new Phrase(cbhead + "", FontFactory.GetFont(FontFactory.TIMES_ROMAN, 7, iTextSharp.text.Font.NORMAL));
+            }
+        }
+
+
         protected void BindData()
         {
 
@@ -1539,7 +1588,7 @@ namespace SIF.Portal
             }
         }
 
-        protected void BtnIDNewCard_Click(object sender, EventArgs e)
+        protected void BtnIDNewCard_Click1(object sender, EventArgs e)
         {
             int Fontsize = 7;
 
@@ -3188,13 +3237,13 @@ namespace SIF.Portal
                 BaseFont bf = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                 string imagepath1 = Server.MapPath("assets/EmpPhotos/");
                 string imagepath2 = Server.MapPath("assets/Images/sign.jpg");
-                string imagepath5 = Server.MapPath("assets/" + CmpIDPrefix + "logo.jpg");
+                string imagepath5 = Server.MapPath("assets/" + CmpIDPrefix + "Billlogo.png");
                 string imagepath6 = Server.MapPath("assets/EmpPhotos/");
                 string imagepath7 = Server.MapPath("assets/Front Broder.jpg");
                 string imagepath8 = Server.MapPath("assets/Back Broder.jpg");
                 string imagepath9 = Server.MapPath("assets/Back Water Mark.jpg");
 
-                Document document = new Document(new Rectangle(595, 842), 15, 50, 5, 0);
+                Document document = new Document(new Rectangle(595, 842), 15, 50, 250, 0);
                 var writer = PdfWriter.GetInstance(document, ms);
                 document.Open();
 
@@ -3287,7 +3336,7 @@ namespace SIF.Portal
                         srflogo.ScaleAbsolute(90f, 50f); //80,50
                         PdfPCell companylogo = new PdfPCell();
                         Paragraph cmplogo = new Paragraph();
-                        cmplogo.Add(new Chunk(srflogo, 50f, 0f));
+                        cmplogo.Add(new Chunk(srflogo, 30f, 0f));
                         companylogo.AddElement(cmplogo);
                         companylogo.HorizontalAlignment = 1;
                         companylogo.Border = 0;
@@ -3536,6 +3585,7 @@ namespace SIF.Portal
 
 
                     document.Add(IDCardTemptable1);
+                    document.NewPage();
 
                     #endregion
                     //PdfPCell childTable1 = new PdfPCell(IDCardTemptable1);
@@ -3894,6 +3944,626 @@ namespace SIF.Portal
             }
         }
 
+
+        protected void BtnIDNewCard_Click(object sender, EventArgs e)
+        {
+            int totalfonts = FontFactory.RegisterDirectory("c:\\WINDOWS\\fonts");
+            StringBuilder sa = new StringBuilder();
+            foreach (string fontname in FontFactory.RegisteredFonts)
+            {
+                sa.Append(fontname + "\n");
+            }
+
+            int Fontsize = 10;
+            string fontstyle = "Calibri";
+
+            List<String> EmpId_list = new List<string>();
+
+            var list = new List<string>();
+
+            for (int i = 0; i < lstEmpIdName.Items.Count; i++)
+            {
+                if (lstEmpIdName.Items[i].Selected == true)
+                {
+                    list.Add("'" + lstEmpIdName.Items[i].Value + "'");
+                }
+            }
+
+            string empids = string.Join(",", list.ToArray());
+
+            #region for Variable Declaration
+
+            string Empid = "";
+            string Name = "";
+            string Designation = "";
+            string IDcardIssued = "";
+            string IDcardvalid = "";
+            string BloodGroup = "";
+            string prTown = "";
+            string prPostOffice = "";
+            string prTaluka = "";
+            string statessndcity = "";
+            string prPoliceStation = "";
+            string prcity = "";
+            string prphone = "";
+            string prlmark = "";
+            string prLmark = "";
+            string prPincode = "";
+            string prState = "";
+            string State = "";
+            string address1 = "";
+            string Image = "";
+            string EmpSign = "";
+            string empdob = "";
+            string empdoj = "";
+            string empphoneno = "";
+            string peTaluka = "";
+            string peTown = "";
+            string peLmark = "";
+            string pearea = "";
+            string pecity = "";
+            string peDistrict = "";
+            string pePincode = "";
+            string addres1 = "";
+            string peState = "";
+            string pelmark = "";
+            string branch = "";
+            string pestreet = "";
+            string pePostOffice = "";
+            string pephone = "";
+            string pePoliceStation = "";
+            string ESInumber = "";
+
+
+            #endregion for Variable Declaration
+
+            #region for companyinfo
+            string QueryCompanyInfo = "select * from companyinfo";
+            DataTable DtCompanyInfo = SqlHelper.Instance.GetTableByQuery(QueryCompanyInfo);
+
+            string CompanyName = "";
+            string Address = "";
+            string Emailid = "";
+            string Website = "";
+            string Phoneno = "";
+            string Faxno = "";
+
+            if (DtCompanyInfo.Rows.Count > 0)
+            {
+                CompanyName = DtCompanyInfo.Rows[0]["CompanyName"].ToString();
+                Address = DtCompanyInfo.Rows[0]["Address"].ToString();
+                Phoneno = DtCompanyInfo.Rows[0]["Phoneno"].ToString();
+                Faxno = DtCompanyInfo.Rows[0]["Faxno"].ToString();
+                Emailid = DtCompanyInfo.Rows[0]["Emailid"].ToString();
+                Website = DtCompanyInfo.Rows[0]["Website"].ToString();
+
+
+            }
+            #endregion for companyinfo
+
+            string query = "";
+            DataTable dt = new DataTable();
+
+            query = "select empdetails.Empid,(EmpFName+' '+EmpMName+''+EmpLName) as Fullname,EmpPhone,D.Design as EmpDesgn,prPostOffice,prPincode,(States.State+Cities.City) as statessndcity,(prTaluka+prPostOffice) as address1,EmpDetails.prLmark,prphone,prState,prcity,EmpDetails.prTaluka,EmpDetails.prTown,States.State,Cities.City,EmpDetails.prPincode,EmpPermanentAddress,(EmpDetails.prcity+EmpDetails.prLmark+EmpDetails.prTaluka+EmpDetails.prTown+States.State+Cities.City+EmpDetails.prPincode+EmpDetails.EmpPresentAddress) as address ," +
+              "case convert(varchar(10),EmpDtofBirth,103) when '01/01/1900' then '' else convert(varchar(10),EmpDtofBirth,103) end EmpDtofBirth ," +
+              "case convert(varchar(10),EmpDtofJoining,103) when '01/01/1900' then '' else convert(varchar(10),EmpDtofJoining,103) end EmpDtofJoining ," +
+              "case convert(varchar(10),EmpDtofLeaving,103) when '01/01/1900' then '' else convert(varchar(10),EmpDtofLeaving,103) end EmpDtofLeaving ," +
+              "case convert(varchar(11),IDCardIssued,106) when '01 Jan 1900' then '' else convert(varchar(11),IDCardIssued,106) end IDCardIssued ," +
+              "case convert(varchar(11),IDCardValid,106) when '01 Jan 1900' then '' else convert(varchar(11),IDCardValid,106) end IDCardValid ," +
+              "Image,EmpSign,BN.BloodGroupName as EmpBloodGroup,EmpESINo from EmpDetails " +
+                       " inner join designations D on D.Designid=EmpDetails.EmpDesgn " +
+                       " left join BloodGroupNames BN on BN.BloodGroupId=EmpDetails.EmpBloodGroup left join Cities on  Cities.CityID= EmpDetails.prCity LEFT JOIN States on States.StateID=EmpDetails.prState " +
+                       "left join branch b on b.branchid=empdetails.branch left join empesicodes esi on esi.Empid=EmpDetails.EmpId" +
+                       " where empdetails.empid  in (" + empids + ")  order by empid";
+            dt = config.ExecuteAdaptorAsyncWithQueryParams(query).Result;
+
+            if (dt.Rows.Count > 0)
+            {
+                MemoryStream ms = new MemoryStream();
+                BaseFont bf = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                string imagepath1 = Server.MapPath("~/assets/EmpPhotos/");
+                string imagepath2 = Server.MapPath("~/assets/");
+                string imagepath3 = Server.MapPath("~/assets/EmpSign/");
+                string imagepath4 = Server.MapPath("~/assets/");
+                string imagepath5 = Server.MapPath("assets/Images/");
+                string imagepath7 = Server.MapPath("assets/Front Broder.jpg");
+                string imagepath8 = Server.MapPath("assets/Back Broder.jpg");
+                Document document = new Document(PageSize.A4);
+                var writer = PdfWriter.GetInstance(document, ms);
+                PageEventHelperL pageEventHelper = new PageEventHelperL();
+                writer.PageEvent = pageEventHelper;
+                document.Open();
+
+                #region for range ID Card Display
+
+                PdfPTable MainIDCarddetails = new PdfPTable(12);
+                MainIDCarddetails.TotalWidth = 850f;
+                MainIDCarddetails.LockedWidth = true;
+                MainIDCarddetails.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                MainIDCarddetails.DefaultCell.VerticalAlignment = Element.ALIGN_TOP;
+                float[] width4 = new float[] { 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f };
+                MainIDCarddetails.SetWidths(width4);
+
+                for (int k = 0; k < dt.Rows.Count; k++)
+                {
+                    prlmark = "";
+                    prTaluka = "";
+                    prTown = "";
+                    prphone = "";
+                    prcity = "";
+                    prPincode = "";
+                    peState = "";
+                    prPostOffice = "";
+
+                    Empid = dt.Rows[k]["Empid"].ToString();
+                    Name = dt.Rows[k]["Fullname"].ToString();
+                    Designation = dt.Rows[k]["EmpDesgn"].ToString();
+
+                    IDcardIssued = dt.Rows[k]["IDCardIssued"].ToString();
+                    IDcardvalid = dt.Rows[k]["IDCardValid"].ToString();
+
+                    // IDcardIssued = DateTime.Parse(dt.Rows[k]["IDCardIssued"].ToString()).ToString("dd/MMM/yyyy");
+
+                    // IDcardvalid = DateTime.Parse(dt.Rows[k]["IDCardValid"].ToString()).ToString("dd/MMM/yyyy");
+
+
+                    BloodGroup = dt.Rows[k]["EmpBloodGroup"].ToString();
+                    Image = dt.Rows[k]["Image"].ToString();
+                    EmpSign = dt.Rows[k]["EmpSign"].ToString();
+                    empdob = dt.Rows[k]["EmpDtofBirth"].ToString();
+                    empdoj = dt.Rows[k]["EmpDtofJoining"].ToString();
+                    // address = dt.Rows[k]["address"].ToString();
+                    prlmark = dt.Rows[k]["prLmark"].ToString();
+                    prTaluka = dt.Rows[k]["prTaluka"].ToString();
+                    prTown = dt.Rows[k]["prTown"].ToString();
+                    prphone = dt.Rows[k]["prphone"].ToString();
+                    prcity = dt.Rows[0]["City"].ToString();
+                    prPincode = dt.Rows[0]["prPincode"].ToString();
+                    peState = dt.Rows[k]["State"].ToString();
+                    prPostOffice = dt.Rows[k]["prPostOffice"].ToString();
+                    Emailid = DtCompanyInfo.Rows[0]["Emailid"].ToString();
+                    Website = DtCompanyInfo.Rows[0]["Website"].ToString();
+                    address1 = dt.Rows[k]["address1"].ToString();
+                    State = dt.Rows[k]["State"].ToString();
+                    prPincode = dt.Rows[k]["prPincode"].ToString();
+                    //EmpDtofLeaving = dt.Rows[k]["EmpDtofLeaving"].ToString();
+                    empphoneno = dt.Rows[k]["EmpPhone"].ToString();
+                    ESInumber = dt.Rows[k]["EmpESINo"].ToString();
+
+                    PdfPTable IDCardTemptable1 = new PdfPTable(4);
+                    IDCardTemptable1.TotalWidth = 460f;
+                    // IDCardTemptable1.HorizontalAlignment = 0;
+                    IDCardTemptable1.LockedWidth = true;
+                    float[] width1 = new float[] { 2.4f, 2.4f, 2.4f, 2.4f };
+                    IDCardTemptable1.SetWidths(width1);
+
+                    iTextSharp.text.Image srflogo = iTextSharp.text.Image.GetInstance(imagepath2 + "SIFBilllogo.png");
+                    srflogo.ScalePercent(15f);
+                    //srflogo.ScaleAbsolute(430f, 110f);
+                    PdfPCell companylogo = new PdfPCell();
+                    Paragraph cmplogo = new Paragraph();
+                    cmplogo.Add(new Chunk(srflogo, 210f, 0, true));
+                    companylogo.AddElement(cmplogo);
+                    companylogo.HorizontalAlignment = 0;
+                    companylogo.Colspan = 4;
+                    companylogo.PaddingLeft = -62;
+                    //companylogo.PaddingTop = -10f;
+                    companylogo.Border = 0;
+                    IDCardTemptable1.AddCell(companylogo);
+
+                    BaseColor color = new BaseColor(255, 0, 0);
+
+
+
+                    PdfPCell compaddr = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize + 15, Font.BOLD, color)));
+                    compaddr.HorizontalAlignment = 1;
+                    compaddr.BorderWidthLeft = 0;
+                    compaddr.BorderWidthTop = 0;
+                    compaddr.BorderWidthBottom = 0;
+                    compaddr.BorderWidthRight = 0;
+                    compaddr.Colspan = 4;
+                    compaddr.PaddingTop = 25;
+                   // IDCardTemptable1.AddCell(compaddr);
+
+                    PdfPCell compno = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize + 15, Font.BOLD, BaseColor.BLACK)));
+                    compno.HorizontalAlignment = 1;
+                    compno.BorderWidthLeft = 0;
+                    compno.BorderWidthTop = 0;
+                    compno.BorderWidthBottom = 0;
+                    compno.BorderWidthRight = 0;
+                    compno.Colspan = 4;
+                    compno.FixedHeight = 5;
+                    IDCardTemptable1.AddCell(compno);
+
+                    if (Image.Length > 0)
+                    {
+                        iTextSharp.text.Image Empphoto = iTextSharp.text.Image.GetInstance(imagepath1 + Image);
+                        //Empphoto.ScalePercent(75f);
+                        Empphoto.ScaleAbsolute(159f, 220f);
+                        PdfPCell EmpImage = new PdfPCell();
+                        Paragraph Emplogo = new Paragraph();
+                        Emplogo.Add(new Chunk(Empphoto, 130f, 0, true));
+                        EmpImage.AddElement(Emplogo);
+                        EmpImage.HorizontalAlignment = 1;
+                        EmpImage.Colspan = 4;
+                        EmpImage.Border = 0;
+                        IDCardTemptable1.AddCell(EmpImage);
+                    }
+                    else
+                    {
+                        PdfPCell EmpImage = new PdfPCell();
+                        EmpImage.HorizontalAlignment = 2;
+                        EmpImage.Colspan = 4;
+                        EmpImage.Border = 0;
+                        EmpImage.FixedHeight = 150f;
+                        IDCardTemptable1.AddCell(EmpImage);
+                    }
+
+                    compno = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize + 15, Font.BOLD, BaseColor.BLACK)));
+                    compno.HorizontalAlignment = 1;
+                    compno.BorderWidthLeft = 0;
+                    compno.BorderWidthTop = 0;
+                    compno.BorderWidthBottom = 0;
+                    compno.BorderWidthRight = 0;
+                    compno.Colspan = 4;
+                    compno.FixedHeight = 5;
+                    IDCardTemptable1.AddCell(compno);
+
+                    PdfPCell cellNameval = new PdfPCell(new Phrase("Name   :", FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    cellNameval.HorizontalAlignment = 0;
+                    cellNameval.BorderWidthLeft = 0;
+                    cellNameval.BorderWidthTop = 0;
+                    cellNameval.BorderWidthBottom = 0;
+                    cellNameval.BorderWidthRight = 0;
+                    cellNameval.PaddingTop = 15;
+                   // cellNameval.FixedHeight = 5;
+                    cellNameval.Colspan = 1;
+                    IDCardTemptable1.AddCell(cellNameval);
+
+
+                    cellNameval = new PdfPCell(new Phrase(Name, FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    cellNameval.HorizontalAlignment = 0;
+                    cellNameval.BorderWidthLeft = 0;
+                    cellNameval.BorderWidthTop = 0;
+                    cellNameval.BorderWidthBottom = 0;
+                    cellNameval.BorderWidthRight = 0;
+                    cellNameval.PaddingLeft = 75;
+                    cellNameval.PaddingTop = 15;
+                   //cellNameval.FixedHeight = 5;
+                    cellNameval.Colspan = 3;
+                    IDCardTemptable1.AddCell(cellNameval);
+
+                    var phrase1a = new Phrase();
+                    phrase1a.Add(new Chunk("Designation ", FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    phrase1a.Add(new Chunk("  :  " + Designation, FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    cellNameval = new PdfPCell();
+                    cellNameval.AddElement(phrase1a);
+                    cellNameval.HorizontalAlignment = 1;
+                    cellNameval.BorderWidthLeft = 0;
+                    cellNameval.BorderWidthTop = 0;
+                    cellNameval.BorderWidthBottom = 0;
+                    cellNameval.BorderWidthRight = 0;
+                    cellNameval.PaddingTop = 45;
+                    cellNameval.Colspan = 4;
+                    IDCardTemptable1.AddCell(cellNameval);
+
+
+
+                    //cellNameval = new PdfPCell(new Phrase("Valid Upto : " + IDcardvalid, FontFactory.GetFont(fontstyle, Fontsize + 19, Font.NORMAL, BaseColor.BLACK)));
+                    //cellNameval.HorizontalAlignment = 1;
+                    //cellNameval.BorderWidthLeft = 0;
+                    //cellNameval.BorderWidthTop = 0;
+                    //cellNameval.BorderWidthBottom = 0;
+                    //cellNameval.BorderWidthRight = 0;
+                    //cellNameval.Colspan = 4;
+                    //IDCardTemptable1.AddCell(cellNameval);
+
+                    var phrase1b = new Phrase();
+                    phrase1b.Add(new Chunk("Blood Group ", FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    phrase1b.Add(new Chunk(" :  " + BloodGroup, FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    cellNameval = new PdfPCell();
+                    cellNameval.AddElement(phrase1b);
+                    cellNameval.HorizontalAlignment = 1;
+                    cellNameval.BorderWidthLeft = 0;
+                    cellNameval.BorderWidthTop = 0;
+                    cellNameval.BorderWidthBottom = 0;
+                    cellNameval.BorderWidthRight = 0;
+                    cellNameval.PaddingTop = 45;
+                    cellNameval.Colspan = 4;
+                    IDCardTemptable1.AddCell(cellNameval);
+
+                    var phrase1c = new Phrase();
+                    phrase1c.Add(new Chunk("Emp ID           ", FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    phrase1c.Add(new Chunk(" :  " + Empid, FontFactory.GetFont(fontstyle, Fontsize + 22, Font.NORMAL, BaseColor.BLACK)));
+                    cellNameval = new PdfPCell();
+                    cellNameval.AddElement(phrase1c);
+                    cellNameval.HorizontalAlignment = 1;
+                    cellNameval.BorderWidthLeft = 0;
+                    cellNameval.BorderWidthTop = 0;
+                    cellNameval.BorderWidthBottom = 0;
+                    cellNameval.BorderWidthRight = 0;
+                    cellNameval.PaddingTop = 45;
+                    cellNameval.Colspan = 4;
+                    IDCardTemptable1.AddCell(cellNameval);
+
+                    //PdfPCell cellemptyid = new PdfPCell(new Phrase(" ", FontFactory.GetFont(fontstyle, Fontsize + 12, Font.BOLD, BaseColor.BLACK)));
+                    //cellemptyid.HorizontalAlignment = 0;
+                    //cellemptyid.Border = 0;
+                    //cellemptyid.Colspan = 4;
+                    //cellemptyid.FixedHeight = 10;
+                    //IDCardTemptable1.AddCell(cellemptyid);
+
+                    PdfPCell cellemptyid = new PdfPCell(new Phrase(" ", FontFactory.GetFont(fontstyle, Fontsize + 12, Font.BOLD, BaseColor.BLACK)));
+                    cellemptyid.HorizontalAlignment = 0;
+                    cellemptyid.Border = 0;
+                    cellemptyid.Colspan = 4;
+                    //cellemptyid.FixedHeight = 10;
+                    IDCardTemptable1.AddCell(cellemptyid);
+
+
+                    //if (EmpSign.Length > 0)
+                    //{
+                    //    iTextSharp.text.Image Empphoto = iTextSharp.text.Image.GetInstance(imagepath3 + EmpSign);
+                    //    //Empphoto.ScalePercent(25f);
+                    //    Empphoto.ScaleAbsolute(130f, 40f);
+                    //    PdfPCell EmpImage = new PdfPCell();
+                    //    Paragraph Emplogo = new Paragraph();
+                    //    Emplogo.Add(new Chunk(Empphoto, 40f, 0));
+                    //    EmpImage.AddElement(Emplogo);
+                    //    EmpImage.HorizontalAlignment = 1;
+                    //    EmpImage.Colspan = 2;
+                    //    EmpImage.Border = 0;
+                    //    IDCardTemptable1.AddCell(EmpImage);
+                    //}
+                    //else
+                    //{
+                    //    PdfPCell EmpImage = new PdfPCell();
+                    //    EmpImage.HorizontalAlignment = 2;
+                    //    EmpImage.Colspan = 2;
+                    //    EmpImage.Border = 0;
+                    //    IDCardTemptable1.AddCell(EmpImage);
+
+                    //}
+
+                    iTextSharp.text.Image IssuingAuth = iTextSharp.text.Image.GetInstance(imagepath5 + "sign.jpg");
+                    //IssuingAuth.ScalePercent(10f);
+                    IssuingAuth.ScaleAbsolute(130f, 40f);
+                    PdfPCell Authority = new PdfPCell();
+                    Paragraph Authoritylogo = new Paragraph();
+                    Authoritylogo.Add(new Chunk(IssuingAuth, 210f, -90f));
+                    Authority.AddElement(Authoritylogo);
+                    Authority.HorizontalAlignment = 0;
+                    Authority.Colspan = 2;
+                    Authority.PaddingLeft = 30f;
+                    Authority.Border = 0;
+                    Authority.PaddingTop = -70;
+                    IDCardTemptable1.AddCell(Authority);
+
+                    cellemptyid = new PdfPCell(new Phrase(" ", FontFactory.GetFont(fontstyle, Fontsize + 12, Font.BOLD, BaseColor.BLACK)));
+                    cellemptyid.HorizontalAlignment = 0;
+                    cellemptyid.Border = 0;
+                    cellemptyid.Colspan = 2;
+                    IDCardTemptable1.AddCell(cellemptyid);
+                    //Tuesday January 17th 4:25pm
+
+                    PdfPCell cellissu = new PdfPCell(new Phrase("Signature of Authorised", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    cellissu.HorizontalAlignment = 2;
+                    cellissu.Border = 0;
+                    cellissu.Colspan = 4;
+                    cellissu.PaddingTop =-5;
+                    IDCardTemptable1.AddCell(cellissu);
+
+                    //if (File.Exists(imagepath7))
+                    //{
+                    //    iTextSharp.text.Image Sign1 = iTextSharp.text.Image.GetInstance(imagepath7);
+                    //    Sign1.ScalePercent(80f);
+                    //    // Sign1.ScaleAbsolute(163f, 12f);//170f,15f
+                    //    PdfPCell Signature1 = new PdfPCell();
+                    //    Paragraph signlogo1 = new Paragraph();
+                    //    signlogo1.Add(new Chunk(Sign1, 100f, 0f));
+                    //    Signature1.AddElement(signlogo1);
+                    //    Signature1.HorizontalAlignment = 0;
+                    //    // Signature1.Rotation = 90;
+                    //    Signature1.Border = 0;
+                    //    Signature1.Colspan = 4;
+                    //    Signature1.BorderWidthBottom = 0;
+                    //    if(Empid== "SIF000001")
+                    //    {
+                    //        Signature1.PaddingTop = 40;
+                    //    }
+                    //    else
+                    //    {
+                    //        Signature1.PaddingTop = 60;
+                    //    }
+                    //     Signature1.PaddingLeft = -130;
+                    //    IDCardTemptable1.AddCell(Signature1);
+
+                    //}
+                    //else
+                    //{
+
+                    //    PdfPCell Signature = new PdfPCell();
+                    //    Signature.HorizontalAlignment = 0;
+                    //    Signature.Border = 0;
+                    //    Signature.BorderWidthBottom = 0;
+                    //    Signature.FixedHeight = 12;
+                    //    Signature.Colspan = 4;
+                    //    // Signature.Rotation = 90;
+                    //    Signature.PaddingLeft = -130;
+                    //    IDCardTemptable1.AddCell(Signature);
+
+                    //}
+
+                    document.Add(IDCardTemptable1);
+
+
+
+                    document.NewPage();
+
+                    #region for subtable3
+
+
+                    PdfPTable IDCardTemptable2 = new PdfPTable(4);
+                    IDCardTemptable2.TotalWidth = 460f;
+                    // IDCardTemptable1.HorizontalAlignment = 0;
+                    IDCardTemptable2.LockedWidth = true;
+                    float[] widthNEW = new float[] { 2.4f, 2.4f, 2.4f, 2.4f };
+                    IDCardTemptable2.SetWidths(widthNEW);
+
+
+
+                    PdfPCell Instructions = new PdfPCell(new Phrase("INSTRUCTIONS : ", FontFactory.GetFont(fontstyle, Fontsize + 21, Font.BOLD, BaseColor.BLACK)));
+                    Instructions.HorizontalAlignment = 1;
+                    Instructions.Border = 0;
+                    Instructions.Colspan = 4;
+                    Instructions.PaddingTop = 10;
+                    IDCardTemptable2.AddCell(Instructions);
+
+                    Instructions = new PdfPCell(new Phrase(" ", FontFactory.GetFont(fontstyle, Fontsize + 21, Font.BOLD, BaseColor.BLACK)));
+                    Instructions.HorizontalAlignment = 0;
+                    Instructions.Border = 0;
+                    Instructions.Colspan = 4;
+                    Instructions.FixedHeight = 5;
+                    IDCardTemptable2.AddCell(Instructions);
+
+                    PdfPCell Instructions1 = new PdfPCell(new Phrase("1. If this card is lost please call \n    18005729800 and inform", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    Instructions1.HorizontalAlignment = 0;
+                    Instructions1.Border = 0;
+                    Instructions1.Colspan = 4;
+                    //Instructions1.SetLeading(0f, 1.2f);
+                    IDCardTemptable2.AddCell(Instructions1);
+
+                    PdfPCell Instructions3 = new PdfPCell(new Phrase("2. This card related to the identity of the \n    employee.", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    Instructions3.HorizontalAlignment = 0;
+                    Instructions3.Border = 0;
+                    Instructions3.Colspan = 4;
+                    //Instructions3.SetLeading(0f, 1.2f);
+                    IDCardTemptable2.AddCell(Instructions3);
+
+                    PdfPCell cellbloodgrp = new PdfPCell(new Phrase("3. Card is valid for 1 year from the date \n    of issue.", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    cellbloodgrp.HorizontalAlignment = 0;
+                    cellbloodgrp.Border = 0;
+                    cellbloodgrp.Colspan = 4;
+                    //cellbloodgrp.PaddingLeft = 20f;
+                    IDCardTemptable2.AddCell(cellbloodgrp);
+
+                    cellbloodgrp = new PdfPCell(new Phrase("4. This Card is non-transferable and \n    must be surrendered immediately at \n    the time of Resignation / Termination.", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    cellbloodgrp.HorizontalAlignment = 0;
+                    cellbloodgrp.Border = 0;
+                    cellbloodgrp.Colspan = 4;
+                    //cellbloodgrp.PaddingLeft = 20f;
+                    IDCardTemptable2.AddCell(cellbloodgrp);
+
+                    cellbloodgrp = new PdfPCell(new Phrase("5. The card should always be displayed \n    by the holder while on duty.", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.BOLD, BaseColor.BLACK)));
+                    cellbloodgrp.HorizontalAlignment = 0;
+                    cellbloodgrp.Border = 0;
+                    cellbloodgrp.Colspan = 4;
+                    //cellbloodgrp.PaddingLeft = 20f;
+                    IDCardTemptable2.AddCell(cellbloodgrp);
+
+                    PdfPCell Issuedate = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize + 21, Font.BOLD, BaseColor.BLACK)));
+                    Issuedate.HorizontalAlignment = 0;
+                    Issuedate.Border = 0;
+                    Issuedate.Colspan = 4;
+                    Issuedate.PaddingLeft = 10;
+                    Issuedate.FixedHeight = 25;
+                    IDCardTemptable2.AddCell(Issuedate);
+
+                    Issuedate = new PdfPCell(new Phrase(CompanyName, FontFactory.GetFont(fontstyle, Fontsize + 18, Font.BOLD, BaseColor.BLACK)));
+                    Issuedate.HorizontalAlignment = 1;
+                    Issuedate.Border = 0;
+                    Issuedate.Colspan = 4;
+                    Issuedate.PaddingLeft = 10;
+                    IDCardTemptable2.AddCell(Issuedate);
+
+                    Issuedate = new PdfPCell(new Phrase("Emergency No: 18005729800", FontFactory.GetFont(fontstyle, Fontsize + 17, Font.NORMAL, BaseColor.BLACK)));
+                    Issuedate.HorizontalAlignment = 1;
+                    Issuedate.Border = 0;
+                    Issuedate.Colspan = 4;
+                    Issuedate.PaddingLeft = 10;
+                    IDCardTemptable2.AddCell(Issuedate);
+
+                    PdfPCell cellmobile = new PdfPCell(new Phrase(Address, FontFactory.GetFont(fontstyle, Fontsize + 17, Font.NORMAL, BaseColor.BLACK)));
+                    cellmobile.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cellmobile.Border = 0;
+                    cellmobile.Colspan = 4;
+                    cellmobile.PaddingLeft = 10;
+                    IDCardTemptable2.AddCell(cellmobile);
+
+                    PdfPCell cellmobile1 = new PdfPCell(new Phrase("", FontFactory.GetFont(fontstyle, Fontsize + 18, Font.NORMAL, BaseColor.BLACK)));
+                    cellmobile1.HorizontalAlignment = Element.ALIGN_JUSTIFIED;
+                    cellmobile1.Border = 0;
+                    cellmobile1.Colspan = 4;
+                    cellmobile1.FixedHeight = 5;
+                    cellmobile1.PaddingBottom = 5f;
+                    IDCardTemptable2.AddCell(cellmobile1);
+
+                    Issuedate = new PdfPCell(new Phrase(Website, FontFactory.GetFont(fontstyle, Fontsize + 18, Font.BOLD, BaseColor.BLACK)));
+                    Issuedate.HorizontalAlignment = 1;
+                    Issuedate.Border = 0;
+                    Issuedate.Colspan = 4;
+                    Issuedate.PaddingLeft = 10;
+                    IDCardTemptable2.AddCell(Issuedate);
+
+                    //if (File.Exists(imagepath8))
+                    //{
+                    //    iTextSharp.text.Image Sign1 = iTextSharp.text.Image.GetInstance(imagepath8);
+                    //    Sign1.ScalePercent(80f);
+                    //    //Sign1.ScaleAbsolute(163f, 12f);
+                    //    PdfPCell Signature2 = new PdfPCell();
+                    //    Paragraph signlogo2 = new Paragraph();
+                    //    signlogo2.Add(new Chunk(Sign1, 100f, 0f));
+                    //    Signature2.AddElement(signlogo2);
+                    //    Signature2.HorizontalAlignment = 0;
+                    //    //Signature2.Colspan = 4;
+                    //    Signature2.Border = 0;
+                    //    Signature2.PaddingTop = 95;
+                    //    Signature2.BorderWidthBottom = 0;
+                    //    Signature2.Colspan = 4;
+                    //    Signature2.PaddingLeft = -130;
+                    //    IDCardTemptable2.AddCell(Signature2);
+                    //}
+                    //else
+                    //{
+
+                    //    PdfPCell Signature = new PdfPCell();
+                    //    Signature.HorizontalAlignment = 0;
+                    //    //Signature.Colspan = 4;
+                    //    Signature.PaddingTop = 5;
+                    //    Signature.Border = 0;
+                    //    Signature.PaddingTop = 16f;
+                    //    Signature.PaddingLeft = -10f;
+                    //    Signature.BorderWidthBottom = 0;
+                    //    Signature.FixedHeight = 12;
+                    //    Signature.Colspan = 4;
+                    //    Signature.PaddingLeft = -130;
+                    //    IDCardTemptable2.AddCell(Signature);
+
+                    //}
+
+                    document.Add(IDCardTemptable2);
+
+
+
+                    #endregion for sub table
+
+                    document.NewPage();
+                    //document.Add(IDCardTemptable1);
+                }
+                #endregion
+
+                //document.Add(MainIDCarddetails);
+                document.Close();
+
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=IDCard.pdf");
+                Response.Buffer = true;
+                Response.Clear();
+                Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+                Response.OutputStream.Flush();
+                Response.End();
+            }
+        }
 
 
 

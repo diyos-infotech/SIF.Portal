@@ -247,7 +247,7 @@
 
                             </td>
                              <td>
-                         <asp:Button ID="Button2" runat="server" Text="ID Card" Visible="false" OnClick="BtnIDNewCard_Click" />
+                         <asp:Button ID="Button2" runat="server" Text="ID Card" Visible="true" OnClick="BtnIDNewCard_Click" />
 
                             </td>
                             <td>
@@ -255,7 +255,7 @@
 
                             </td>
                             <td>
-                                <asp:Button ID="btnIDCardNew" runat="server" Text="Download ID Card New" OnClick="btnIDCardNew_Click" />
+                                <asp:Button ID="btnIDCardNew" runat="server" Text="Download ID Card New" Visible="false" OnClick="btnIDCardNew_Click" />
                             </td>
                         </tr>
                     </table>
