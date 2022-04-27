@@ -1568,15 +1568,13 @@ namespace KLTS.Data
 
         public string LoadMaxEmpid(string EmpidPrefix, string EmployeeType)
         {
-            //   string SqlqryForEmpid = "select max(right(Tbl1.empid,6)) as Empid  From  ( Select EmpId " +
-            //" from EmpDetails UNION ALL Select EmpId from InEmpDetails) as Tbl1 ";
-
-
-            //string SqlqryForEmpid = "select Max(right(empid,6)) as Empid  From empdetails where Empid like '" + EmpidPrefix + "%'  ";
             string SqlqryForEmpid = "select (select (Max(right(empid,6))) From empdetails where Empid like '" + EmpidPrefix + "%' and  EmployeeType='G' )  as EmpidG,(select  (Max(right(empid,6)))  From empdetails where Empid like '" + EmpidPrefix + "%'  and  EmployeeType='S') as EmpidS ";
 
             System.Data.DataTable dtForEmpid = config.ExecuteAdaptorAsyncWithQueryParams(SqlqryForEmpid).Result;
             int Empid = 1;
+
+
+
             string EmpPrefix = string.Empty;
 
             if (dtForEmpid.Rows.Count > 0)
@@ -1590,17 +1588,29 @@ namespace KLTS.Data
                 }
                 else
                 {
+
                     if (String.IsNullOrEmpty(dtForEmpid.Rows[0]["EmpidS"].ToString()) == false)
                     {
                         Empid = int.Parse(dtForEmpid.Rows[0]["EmpidS"].ToString()) + 1;
                     }
+                    else
+                    {
+                        Empid = 900001;
+                    }
                 }
             }
-
+            else
+            {
+                if (EmployeeType == "S")
+                {
+                    Empid = 900001;
+                }
+            }
             if (String.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["Empname"]) == false)
             {
                 EmpPrefix = System.Configuration.ConfigurationManager.AppSettings["Empname"].ToString();
             }
+
             return EmpidPrefix + (Empid).ToString("000000");
         }
 

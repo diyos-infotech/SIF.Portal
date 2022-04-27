@@ -823,6 +823,10 @@
 
                                             </Columns>
 
+
+
+
+
                                             <EmptyDataRowStyle BackColor="BlueViolet" BorderColor="Aquamarine"></EmptyDataRowStyle>
 
                                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -1361,6 +1365,12 @@
                                             <td style="text-align: right; font-weight: bold">
                                                 <asp:Button ID="Button1" runat="server" Text="Invoice Qty" class="btn save" OnClick="btninvoiceQtyformat_Click" /><br />
                                             </td>
+
+                                             
+                                             <td style="text-align: right; font-weight: bold">
+                                                <asp:Button ID="btninvoicepdf" runat="server" Text="Invoice New Pdf" class="btn save" OnClick="btninvoicepdf_Click" /><br />
+                                            </td>
+
 
                                             <td style="text-align: right; font-weight: bold">
                                                 <asp:Button ID="btninvMaterial" runat="server" Text="Material" class="btn save" Visible="false" OnClick="btnMaterialInv_Click" /><br />
